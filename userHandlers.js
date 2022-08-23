@@ -27,17 +27,27 @@ const getUserById = (req, res) => {
       console.error(err);
       res.status(500).send("Error retrieving data from database");
     });
+};
 
-  /*  const movie = movies.find((movie) => movie.id === id);
+const postNewUser = (req, res) => {
+  const { firstname, lastname, email, city, language } = req.body;
 
-  if (movie != null) {
-    res.json(movie);
-  } else {
-    res.status(404).send("Not Found");
-  }*/
+  database
+    .query(
+      "INSERT INTO users(firstname, lastname, email, city, language) VALUES (?, ?, ?, ?, ?)",
+      [firstname, lastname, email, city, language]
+    )
+    .then(([result]) => {
+      res.location(`/api/users/${result.insertId}`).sendStatus(201);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("Error saving the user");
+    });
 };
 
 module.exports = {
   getUsers,
   getUserById,
+  postNewUser,
 };
