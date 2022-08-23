@@ -16,12 +16,8 @@ const validateMovie = (req, res, next) => {
   }
   if (duration == null) {
     errors.push({ field: "color", message: "This field is required" });
-  } else if (
-    title.length ||
-    director.length ||
-    year.length ||
-    color.length >= 255
-  ) {
+  }
+  if ((title.length || director.length || year.length || color.length) >= 255) {
     errors.push({
       field: "",
       message: " Fields should contain less than 255 characters",
@@ -51,11 +47,10 @@ const validateUser = (req, res, next) => {
   }
   if (!emailRegex.test(email)) {
     errors.push({ field: "email", message: "Invalid email" });
-  } else if (
-    firstname.length ||
-    lastname.length ||
-    city.length ||
-    language.length >= 255
+  }
+  if (
+    (firstname.length || lastname.length || city.length || language.length) >=
+    255
   ) {
     errors.push({
       field: "",
